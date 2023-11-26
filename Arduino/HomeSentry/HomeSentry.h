@@ -11,9 +11,11 @@
 
 #include <Arduino.h>
 #include <WiFiS3.h>
+#include <Arduino_LED_Matrix.h>   // Include the LED_Matrix library
+#include <frames.h>               // Include a header file containing frame data
+#include <string.h>
 // #include "secrets.h" // fill the field of the "secret_template.h" file and rename it as "secret.h"
 // #include "ThingSpeak.h" // always include thingspeak header file after other header files and custom macros
-
 
 class HomeSentry {
     public:
@@ -23,23 +25,27 @@ class HomeSentry {
         // WiFi status
         int status = WL_IDLE_STATUS;
 
-        // Display a value in the arduino LED matrix.
+        // Display a value with the Arduino LED matrix.
         void displayNumber(
             int number
         );
 
-        // // Constructor (used to create an instance of the class)
+        // Display a danger sign with the Arduino LED matrix.
+        void displayError();
+
+        // Constructor (used to create an instance of the class)
         HomeSentry(
-            char ssid,
-            char pass,
+            const char* ssid,
+            const char* pass
         ); 
 
     private:
-        // WiFi SSID and password
-        char _ssid;
-        char _pass;
+        // WiFi SSID
+        char _ssid[30] ;
+        // WiFi password
+        char _pass[30];
 
-}
+};
 
 
 #endif

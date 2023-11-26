@@ -1,0 +1,3 @@
+HomeSentry   KEYWORD1
+connectWiFi   KEYWORD2
+displayNumber    KEYWORD2

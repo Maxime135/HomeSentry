@@ -9,11 +9,17 @@
 #include <Arduino.h>
 #include <HomeSentry.h>
 
+// Create an instance of the ArduinoLEDMatrix class
+ArduinoLEDMatrix matrix;
 
 // Constructor
-HomeSentry::HomeSentry(char ssid, char pass) {
-    _ssid[] = ssid;
-    -pass[] = pass;
+HomeSentry::HomeSentry(const char* ssid, const char* pass) {
+    // _ssid[30] = ssid;
+    // _pass[30] = pass;
+    strcpy(_ssid, ssid);
+    strcpy(_pass, pass);
+
+    matrix.begin();                 // Initialize the LED matrix
 }
 
 
@@ -21,6 +27,7 @@ HomeSentry::HomeSentry(char ssid, char pass) {
 
 void HomeSentry::connectWiFi() {
     //WiFi connection
+
     //Initialize serial and wait for port to open:
     Serial.begin(9600);
     while (!Serial) {
@@ -46,14 +53,30 @@ void HomeSentry::connectWiFi() {
     // Connect to WPA/WPA2 network:
     status = WiFi.begin(_ssid, _pass);
 
-    // wait 3 seconds for connection:
-    delay(3000);
+    // wait 5 seconds for connection:
+    delay(5000);
+    }
+
+    // you're connected now, so print out the data:
+    Serial.print("You're connected to the network: ");
+    Serial.println(_ssid);
+    // print your board's IP address:
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
 }
 
 
-// Display a number on the Arduino Uno R4 WiFi board LED matrix
-
+// Display a number with the Arduino Uno R4 WiFi board LED matrix
 void HomeSentry::displayNumber(int number){
     //ToDo: design the function
-    Serial.println(number);
+    // Serial.println(number);
+    matrix.loadFrame(heart);
+    delay(500);
+}
+
+
+// Display an error sign with the Arduino Uno R4 WiFi board LED matrix
+void HomeSentry::displayError(){
+    matrix.loadFrame(danger);
+    delay(500);
 }
