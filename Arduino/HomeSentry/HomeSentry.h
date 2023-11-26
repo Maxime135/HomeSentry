@@ -11,7 +11,7 @@
 
 #include <Arduino.h>
 #include <WiFiS3.h>
-#include "secrets.h" // fill the field of the "secret_template.h" file and rename it as "secret.h"
+// #include "secrets.h" // fill the field of the "secret_template.h" file and rename it as "secret.h"
 // #include "ThingSpeak.h" // always include thingspeak header file after other header files and custom macros
 
 
@@ -28,7 +28,7 @@ class HomeSentry {
             int number
         );
 
-        // Constructor (used to create an instance of the class)
+        // // Constructor (used to create an instance of the class)
         HomeSentry(
             char ssid,
             char pass,
