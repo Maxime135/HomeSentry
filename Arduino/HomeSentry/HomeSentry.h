@@ -11,7 +11,7 @@
 
 #include <Arduino.h>
 #include <WiFiS3.h>
-#include <Arduino_LED_Matrix.h>   // Include the LED_Matrix library
+#include "Arduino_LED_Matrix.h"   // Include the LED_Matrix library
 #include <frames.h>               // Include a header file containing frame data
 #include <string.h>
 // #include "secrets.h" // fill the field of the "secret_template.h" file and rename it as "secret.h"
@@ -38,6 +38,9 @@ class HomeSentry {
             const char* ssid,
             const char* pass
         ); 
+
+        // Create an instance of the ArduinoLEDMatrix class
+        ArduinoLEDMatrix matrix;
 
     private:
         // WiFi SSID

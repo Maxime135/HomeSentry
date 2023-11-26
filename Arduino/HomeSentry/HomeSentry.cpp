@@ -10,7 +10,7 @@
 #include <HomeSentry.h>
 
 // Create an instance of the ArduinoLEDMatrix class
-ArduinoLEDMatrix matrix;
+// ArduinoLEDMatrix matrix;
 
 // Constructor
 HomeSentry::HomeSentry(const char* ssid, const char* pass) {
@@ -18,18 +18,19 @@ HomeSentry::HomeSentry(const char* ssid, const char* pass) {
     // _pass[30] = pass;
     strcpy(_ssid, ssid);
     strcpy(_pass, pass);
-
-    matrix.begin();                 // Initialize the LED matrix
+    
+    // Serial.begin(9600);
+    // Serial.println("matrix is getting ready...");
+    // matrix.begin();                 // Initialize the LED matrix
+    // Serial.println("matrix ready");
 }
 
 
 // Conned to WiFi function
-
 void HomeSentry::connectWiFi() {
     //WiFi connection
-
-    //Initialize serial and wait for port to open:
     Serial.begin(9600);
+    //Initialize serial and wait for port to open:
     while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
     }
@@ -63,13 +64,15 @@ void HomeSentry::connectWiFi() {
     // print your board's IP address:
     Serial.print("IP Address: ");
     Serial.println(WiFi.localIP());
+
+    matrix.begin();                 // Initialize the LED matrix
 }
 
 
 // Display a number with the Arduino Uno R4 WiFi board LED matrix
 void HomeSentry::displayNumber(int number){
     //ToDo: design the function
-    // Serial.println(number);
+    Serial.println(number);
     matrix.loadFrame(heart);
     delay(500);
 }
