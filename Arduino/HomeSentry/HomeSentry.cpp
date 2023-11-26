@@ -9,6 +9,9 @@
 #include <Arduino.h>
 #include <HomeSentry.h>
 
+
+
+
 // Create an instance of the ArduinoLEDMatrix class
 // ArduinoLEDMatrix matrix;
 
@@ -70,11 +73,24 @@ void HomeSentry::connectWiFi() {
 
 
 // Display a number with the Arduino Uno R4 WiFi board LED matrix
-void HomeSentry::displayNumber(int number){
-    //ToDo: design the function
-    Serial.println(number);
-    matrix.loadFrame(heart);
-    delay(500);
+void HomeSentry::displayNumber(float numberToDisplay){
+
+    // Animated text displayed
+    matrix.beginDraw();
+    matrix.stroke(0xFFFFFFFF);
+    matrix.textScrollSpeed(150);
+
+    // add the text
+    char charArray[5];
+    dtostrf(numberToDisplay, 2, 2, charArray); // Conversion from flaot to char
+    matrix.textFont(Font_5x7);
+    matrix.beginText(0, 1, 0xFFFFFF);
+    matrix.println(charArray);
+    matrix.endText(SCROLL_LEFT);
+
+    matrix.endDraw();
+    
+    // delay(2000);
 }
 
 

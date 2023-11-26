@@ -11,6 +11,7 @@
 
 #include <Arduino.h>
 #include <WiFiS3.h>
+#include "ArduinoGraphics.h"      // To use ArduinoGraphics APIs, please include BEFORE Arduino_LED_Matrix
 #include "Arduino_LED_Matrix.h"   // Include the LED_Matrix library
 #include <frames.h>               // Include a header file containing frame data
 #include <string.h>
@@ -27,7 +28,7 @@ class HomeSentry {
 
         // Display a value with the Arduino LED matrix.
         void displayNumber(
-            int number
+            float numberToDisplay
         );
 
         // Display a danger sign with the Arduino LED matrix.
@@ -42,11 +43,15 @@ class HomeSentry {
         // Create an instance of the ArduinoLEDMatrix class
         ArduinoLEDMatrix matrix;
 
+
+
     private:
         // WiFi SSID
         char _ssid[30] ;
         // WiFi password
         char _pass[30];
+        // // Text displayed on the LED matrix of the board
+        // char _charArrayToDisplay[20];
 
 };
 

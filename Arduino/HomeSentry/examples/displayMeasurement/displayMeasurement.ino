@@ -37,10 +37,10 @@ void loop() {
   Serial.println(" °C");
   
   // Display the retrived temperature on the LED matrix of the board.
-  sentry.displayNumber(int(temperature));
-  delay(500);
+  sentry.displayNumber(temperature);
+  delay(10000);
 
   sentry.displayError();
 
-  delay(15000);
+  delay(5000);
 }
