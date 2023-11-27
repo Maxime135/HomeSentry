@@ -38,9 +38,16 @@ void loop() {
   
   // Display the retrived temperature on the LED matrix of the board.
   sentry.displayNumber(temperature);
-  delay(10000);
+  delay(3000);
 
   sentry.displayError();
+  delay(9000);
 
-  delay(5000);
+  // Write a value in the ThingSpeak project
+  float value = 19.5;
+  ThingSpeak.writeField(temperatureSensorChannelNumber, temperatureSensorFieldNumber, value, temperatureSensorWriteAPIKey);
+  Serial.println("Done !");
+  sentry.displayNumber(value);
+  delay(3000);
+
 }
