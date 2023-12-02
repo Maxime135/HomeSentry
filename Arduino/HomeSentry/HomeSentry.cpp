@@ -69,6 +69,7 @@ void HomeSentry::connectWiFi() {
     Serial.println(WiFi.localIP());
 
     matrix.begin();                 // Initialize the LED matrix
+    sensorBMP085.begin();           // Initialied the sensor BMP085
 }
 
 
@@ -97,5 +98,27 @@ void HomeSentry::displayNumber(float numberToDisplay){
 // Display an error sign with the Arduino Uno R4 WiFi board LED matrix
 void HomeSentry::displayError(){
     matrix.loadFrame(danger);
-    delay(500);
+    delay(1000);
+}
+
+// Get the temperature from the BMP085 sensor.
+float HomeSentry::readTemperature(){
+    temperature1 = sensorBMP085.readTemperature();
+    
+    Serial.print("Temperature = ");
+    Serial.print(temperature1);
+    Serial.println(" °C \n");
+
+    return temperature1;
+}
+
+// Get the pressure from the BMP085 sensor.
+float HomeSentry::readPressure(){
+    pressure1 = sensorBMP085.readPressure();
+
+    Serial.print("Pressure = ");
+    Serial.print(pressure1);
+    Serial.println(" Pa \n");
+
+    return pressure1;
 }
