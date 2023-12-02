@@ -31,41 +31,50 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  float temperatureRead = ThingSpeak.readFloatField(SensorChannelNumber, temperatureSensorFieldNumber, SensorReadAPIKey);
-  Serial.print("Temperature retrieved: ");
-  Serial.print(temperatureRead);
-  Serial.println(" °C");
   
-  // Display the retrived temperature on the LED matrix of the board.
-  sentry.displayNumber(temperatureRead);
-  delay(3000);
+  int statusCodeRead = ThingSpeak.readMultipleFields(SensorChannelNumber, SensorReadAPIKey);
+  float temperature = ThingSpeak.getFieldAsFloat(temperatureSensorFieldNumber);
+  float pressure = ThingSpeak.getFieldAsFloat(pressureSensorFieldNumber);
+
+
+  Serial.print("Temperature retrieved: ");
+  Serial.print(temperature);
+  Serial.println(" °C");
+
+  Serial.print("Pressure retrieved: ");
+  Serial.print(pressure);
+  Serial.println(" Pa \n");
 
   sentry.displayError();
 
   // Mesure the actual temperature with the sensor
-  float temperature = sentry.readTemperature();
+  temperature = sentry.readTemperature();
 
   // Display the measured temperature on the LED matrix of the board
   sentry.displayNumber(temperature);
-  delay(3000);
 
   // Mesure the actual pressure with the sensor
-  float pressure = sentry.readPressure();
+  pressure = sentry.readPressure();
 
   // Display the measured temperature on the LED matrix of the board
   sentry.displayNumber(pressure);
-  delay(3000);
+
 
   sentry.displayError();
-  delay(9000);
+  delay(10000);
 
   // Write a value in the ThingSpeak project
-  ThingSpeak.writeField(SensorChannelNumber, temperatureSensorFieldNumber, temperature, SensorWriteAPIKey);
-  Serial.println("Temperature: pushed!");
+  ThingSpeak.setField(temperatureSensorFieldNumber, temperature);
+  ThingSpeak.setField(pressureSensorFieldNumber, pressure);
 
-  ThingSpeak.writeField(SensorChannelNumber, pressureSensorFieldNumber, pressure, SensorWriteAPIKey);
-  Serial.println("Pressure: pushed!");
+  int statusCodeWrite = ThingSpeak.writeFields(SensorChannelNumber, SensorWriteAPIKey);
+    if(statusCodeWrite == 0){
+    Serial.println("Channel update successful.");
+  }
+  else{
+    Serial.println("Problem updating channel. HTTP error code " + String(statusCodeWrite));
+  }
 
-  delay(3000);
+  delay(15000);
 
 }

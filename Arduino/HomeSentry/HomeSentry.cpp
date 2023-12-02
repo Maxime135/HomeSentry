@@ -91,13 +91,19 @@ void HomeSentry::displayNumber(float numberToDisplay){
 
     matrix.endDraw();
     
-    // delay(2000);
+    delay(3000);
 }
 
 
 // Display an error sign with the Arduino Uno R4 WiFi board LED matrix
 void HomeSentry::displayError(){
     matrix.loadFrame(danger);
+    delay(1000);
+}
+
+// Display a WiFi logo with the Arduino Uno R4 WiFi board LED matrix
+void HomeSentry::displayError(){
+    matrix.loadFrame(wifi);
     delay(1000);
 }
 

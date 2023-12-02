@@ -37,6 +37,9 @@ class HomeSentry {
         // Display a danger sign with the Arduino LED matrix.
         void displayError();
 
+        // Display a WiFi logo
+        void displayWiFi();
+
         // Constructor (used to create an instance of the class)
         HomeSentry(
             const char* ssid,
