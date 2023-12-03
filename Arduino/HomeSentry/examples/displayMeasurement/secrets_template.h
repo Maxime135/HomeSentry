@@ -1,4 +1,4 @@
-// This is a template. Fill the defferent fields and rename the file as "secrets.h" to use it.
+// This is a template. Fill the following fields and rename the file as "secrets.h" to use it.
 
 #define SECRET_SSID ""
 #define SECRET_PASS ""
