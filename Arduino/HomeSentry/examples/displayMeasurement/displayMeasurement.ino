@@ -1,5 +1,5 @@
 #include <HomeSentry.h>
-#include "secrets.h" // fill the field of the "secret_template.h" file and rename it as "secret.h"
+#include "secrets.h" // fill the fields of the "secret_template.h" file and rename it as "secret.h"
 
 #include "ThingSpeak.h" // always include thingspeak header file after other header files and custom macros
 
