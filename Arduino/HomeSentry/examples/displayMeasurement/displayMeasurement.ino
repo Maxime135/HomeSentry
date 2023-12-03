@@ -75,6 +75,6 @@ void loop() {
     Serial.println("Problem updating channel. HTTP error code " + String(statusCodeWrite));
   }
 
-  delay(15000);
+  delay(900000);    // Push every 15 minutes
 
 }

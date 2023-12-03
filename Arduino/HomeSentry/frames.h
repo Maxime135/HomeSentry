@@ -9,3 +9,9 @@ const uint32_t heart[] = {
 	0x44042081,
 	0x100a0040
 };
+
+const uint32_t wifi[] = {
+	0x401f031,
+	0x860c4e41,
+	0x10000040,
+};
