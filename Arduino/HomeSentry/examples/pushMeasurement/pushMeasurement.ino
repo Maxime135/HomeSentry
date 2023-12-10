@@ -19,7 +19,9 @@ unsigned int temperatureSensorFieldNumber = 1;
 unsigned int pressureSensorFieldNumber = 2;
 
 // Delay between each measurements
-const unsigned long MINUTES = 15*60*1000;
+unsigned long startTime;
+const unsigned long delayTime = 15 * 60 * 1000;
+
 
 
 
@@ -30,35 +32,42 @@ void setup() {
   sentry.connectWiFi();
   //ThingSpeak connection
   ThingSpeak.begin(client);
+  //Timer initialization
+  startTime = millis();
 }
 
 void loop() {
 
-  // Mesure the actual temperature with the sensor
-  float temperature = sentry.readTemperature();
+  // Check if 15 minutes have elapsed
+  if (millis() - startTime >= delayTime) {
 
-  // Display the measured temperature on the LED matrix of the board
-  sentry.displayNumber(temperature);
+    // Mesure the actual temperature with the sensor
+    float temperature = sentry.readTemperature();
 
-  // Mesure the actual pressure with the sensor
-  float pressure = sentry.readPressure();
+    // Display the measured temperature on the LED matrix of the board
+    sentry.displayNumber(temperature);
 
-  // Display the measured temperature on the LED matrix of the board
-  sentry.displayNumber(pressure);
+    // Mesure the actual pressure with the sensor
+    float pressure = sentry.readPressure();
+
+    // Display the measured temperature on the LED matrix of the board
+    sentry.displayNumber(pressure);
 
 
-  // Write a value in the ThingSpeak project
-  ThingSpeak.setField(temperatureSensorFieldNumber, temperature);
-  ThingSpeak.setField(pressureSensorFieldNumber, pressure);
+    // Write a value in the ThingSpeak project
+    ThingSpeak.setField(temperatureSensorFieldNumber, temperature);
+    ThingSpeak.setField(pressureSensorFieldNumber, pressure);
 
-  int statusCodeWrite = ThingSpeak.writeFields(SensorChannelNumber, SensorWriteAPIKey);
-    if(statusCodeWrite == 0){
-    Serial.println("Channel update successful.");
+    int statusCodeWrite = ThingSpeak.writeFields(SensorChannelNumber, SensorWriteAPIKey);
+      if(statusCodeWrite == 0){
+      Serial.println("Channel update successful.");
+    }
+    else{
+      Serial.println("Problem updating channel. HTTP error code " + String(statusCodeWrite));
+    }
+
+    // Reset the start time for the next delay
+    startTime = millis();
   }
-  else{
-    Serial.println("Problem updating channel. HTTP error code " + String(statusCodeWrite));
-  }
-
-  delay(MINUTES);    // Push every 15 secondes
 
 }
