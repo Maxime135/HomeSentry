@@ -102,7 +102,7 @@ void HomeSentry::displayError(){
 }
 
 // Display a WiFi logo with the Arduino Uno R4 WiFi board LED matrix
-void HomeSentry::displayError(){
+void HomeSentry::displayWiFi(){
     matrix.loadFrame(wifi);
     delay(1000);
 }

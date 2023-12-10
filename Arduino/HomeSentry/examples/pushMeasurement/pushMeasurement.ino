@@ -18,6 +18,10 @@ const char * SensorWriteAPIKey = SECRET_WRITE_APIKEY;
 unsigned int temperatureSensorFieldNumber = 1;
 unsigned int pressureSensorFieldNumber = 2;
 
+// Delay between each measurements
+const unsigned long MINUTES = 15*60*1000;
+
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -29,38 +33,19 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  
-  int statusCodeRead = ThingSpeak.readMultipleFields(SensorChannelNumber, SensorReadAPIKey);
-  float temperature = ThingSpeak.getFieldAsFloat(temperatureSensorFieldNumber);
-  float pressure = ThingSpeak.getFieldAsFloat(pressureSensorFieldNumber);
-
-
-  Serial.print("Temperature retrieved: ");
-  Serial.print(temperature);
-  Serial.println(" °C");
-
-  Serial.print("Pressure retrieved: ");
-  Serial.print(pressure);
-  Serial.println(" Pa \n");
-
-  sentry.displayError();
 
   // Mesure the actual temperature with the sensor
-  temperature = sentry.readTemperature();
+  float temperature = sentry.readTemperature();
 
   // Display the measured temperature on the LED matrix of the board
   sentry.displayNumber(temperature);
 
   // Mesure the actual pressure with the sensor
-  pressure = sentry.readPressure();
+  float pressure = sentry.readPressure();
 
   // Display the measured temperature on the LED matrix of the board
   sentry.displayNumber(pressure);
 
-
-  sentry.displayError();
-  delay(10000);
 
   // Write a value in the ThingSpeak project
   ThingSpeak.setField(temperatureSensorFieldNumber, temperature);
@@ -74,6 +59,6 @@ void loop() {
     Serial.println("Problem updating channel. HTTP error code " + String(statusCodeWrite));
   }
 
-  delay(15000);    // Push every 15 secondes
+  delay(MINUTES);    // Push every 15 secondes
 
 }
