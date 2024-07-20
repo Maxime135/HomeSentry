@@ -10,13 +10,15 @@ HomeSentry sentry(SECRET_SSID, SECRET_PASS);
 // Create an instance of the WiFiClient called client.
 WiFiClient client;
 
-
 // Temperature sensor channel details
 unsigned long SensorChannelNumber = SECRET_CH_ID;
 const char * SensorReadAPIKey = SECRET_READ_APIKEY;
 const char * SensorWriteAPIKey = SECRET_WRITE_APIKEY;
 unsigned int temperatureSensorFieldNumber = 1;
 unsigned int pressureSensorFieldNumber = 2;
+
+// Temperature sensor Firebase details
+
 
 // Delay between each measurements
 unsigned long startTime;
@@ -30,7 +32,7 @@ void setup() {
   Serial.begin(9600);
   //HomeSentry object
   sentry.connectWiFi();
-  //ThingSpeak connection
+  // ThingSpeak connection
   ThingSpeak.begin(client);
   //Timer initialization
   startTime = millis();
