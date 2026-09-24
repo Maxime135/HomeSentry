@@ -40,20 +40,23 @@ void setup() {
 
 void loop() {
 
+  unsigned long currentMillis = millis();
+
   // Check if 15 minutes have elapsed
-  if (millis() - startTime >= delayTime) {
+  if (currentMillis - startTime >= delayTime) {
+    startTime = currentMillis;
 
     // Mesure the actual temperature with the sensor
     float temperature = sentry.readTemperature();
 
     // Display the measured temperature on the LED matrix of the board
-    sentry.displayNumber(temperature);
+    // sentry.displayNumber(temperature);
 
     // Mesure the actual pressure with the sensor
     float pressure = sentry.readPressure();
 
     // Display the measured temperature on the LED matrix of the board
-    sentry.displayNumber(pressure);
+    // sentry.displayNumber(pressure);
 
 
     // Write a value in the ThingSpeak project
@@ -67,9 +70,9 @@ void loop() {
     else{
       Serial.println("Problem updating channel. HTTP error code " + String(statusCodeWrite));
     }
-
-    // Reset the start time for the next delay
-    startTime = millis();
   }
+
+  // Optional: add a small delay to reduce CPU usage
+  delay(1000);
 
 }
