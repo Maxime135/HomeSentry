@@ -20,9 +20,8 @@ const char * SensorWriteAPIKey = SECRET_WRITE_APIKEY;
 unsigned int temperatureSensorFieldNumber = 1;
 unsigned int pressureSensorFieldNumber = 2;
 
-// const char * firebase_api_key = FIREBASE_API_KEY;
-// const char * firebase_database_url = FIREBASE_DATABASE_URL;
-
+// HomeSentry Firebase Realtime Database configuration
+// Database URL: https://homesentry-default-rtdb.europe-west1.firebasedatabase.app/
 FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
@@ -33,34 +32,41 @@ bool signupOK = false;
 unsigned long startTime;
 const unsigned long delayTime = 15 * 60 * 1000;
 
-
-
-
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  //HomeSentry object
+
+  // HomeSentry object
   sentry.connectWiFi();
-  // // ThingSpeak connection
+
+  // Keep the ThingSpeak code available if you still need it for comparison/testing.
   // ThingSpeak.begin(client);
 
-  // Firebase connection
+  // Firebase connection configuration for the HomeSentry RTDB
   config.api_key = FIREBASE_API_KEY;
   config.database_url = FIREBASE_DATABASE_URL;
+  config.token_status_callback = tokenStatusCallback;
+
   auth.user.email = FIREBASE_USER_EMAIL;
   auth.user.password = FIREBASE_USER_PASSWORD;
-  if (Firebase.signUp(&config, &auth, "", "")) {
-    Serial.println("successfully connected to Firebase");
-    signupOK = true;
-  } else {
-    // Serial.printf("%s\n", config.signer.signupError.message.c_str());
-    Serial.print(config.signer.signupError.message.c_str());
+
+  // If the Firebase Auth user already exists, signUp may fail, but the session can still
+  // be initialized with Firebase.begin(). The code below keeps the legacy ThingSpeak block
+  // and adds a safe Firebase setup path.
+  if (strlen(FIREBASE_USER_EMAIL) > 0 && strlen(FIREBASE_USER_PASSWORD) > 0) {
+    if (Firebase.signUp(&config, &auth, FIREBASE_USER_EMAIL, FIREBASE_USER_PASSWORD)) {
+      Serial.println("Firebase sign-up successful.");
+      signupOK = true;
+    } else {
+      Serial.print("Firebase sign-up warning: ");
+      Serial.println(config.signer.signupError.message.c_str());
+    }
   }
-  config.token_status_callback = tokenStatusCallback;
+
   Firebase.begin(&config, &auth);
   Firebase.reconnectWiFi(true);
 
-  //Timer initialization
+  // Timer initialization
   startTime = millis();
 }
 
@@ -93,8 +99,10 @@ void loop() {
     //   Serial.println("Problem updating channel. HTTP error code " + String(statusCodeWrite));
     // }
 
-    // Write a value in Firebase
-    if (Firebase.ready() && signupOK) {
+    // Write a value in Firebase.
+    // Use Firebase.ready() instead of signupOK so a valid existing user can still upload
+    // even when the legacy sign-up step returns false.
+    if (Firebase.ready()) {
 
       // storing temperature
       if(Firebase.RTDB.setFloat(&fbdo, "HomeSentry_Sensor/temperature", temperature)){

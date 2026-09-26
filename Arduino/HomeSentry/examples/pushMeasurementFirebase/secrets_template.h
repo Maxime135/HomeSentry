@@ -9,8 +9,9 @@
 #define SECRET_WRITE_APIKEY ""
 #define SECRET_READ_APIKEY ""
 
-// Firebase credentials
+// Firebase credentials for the HomeSentry Realtime Database
+// Database URL example: https://homesentry-default-rtdb.europe-west1.firebasedatabase.app/
 #define FIREBASE_API_KEY ""
-#define FIREBASE_DATABASE_URL ""
+#define FIREBASE_DATABASE_URL "https://homesentry-default-rtdb.europe-west1.firebasedatabase.app/"
 #define FIREBASE_USER_EMAIL ""
 #define FIREBASE_USER_PASSWORD ""
