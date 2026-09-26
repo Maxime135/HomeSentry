@@ -1,0 +1,15 @@
+.DS_Store
+Arduino/.DS_Store
+Arduino/HomeSentry/.DS_Store
+Arduino/HomeSentry/examples/.DS_Store
+Arduino/HomeSentry/examples/displayMeasurement/.DS_Store
+Arduino/HomeSentry/examples/displayMeasurement/secrets.h
+Arduino/HomeSentry/examples/pushMeasurement/.DS_Store
+Arduino/HomeSentry/examples/displayMeasurementFirebase/.DS_Store
+Arduino/HomeSentry/examples/displayMeasurementFirebase/secrets.h
+Arduino/HomeSentry/examples/pushMeasurement/secrets.h
+Arduino/HomeSentry/examples/pushMeasurementFirebase/.DS_Store
+Arduino/HomeSentry/examples/pushMeasurementFirebase/secrets.h
+IOS App/.DS_Store
+IOS App/htmlRequestUIkit.playground/playground.xcworkspace/xcuserdata/maximeboulanger.xcuserdatad/UserInterfaceState.xcuserstate
+IOS App/htmlRequestUIkit.playground/playground.xcworkspace/xcuserdata/maximeboulanger.xcuserdatad/UserInterfaceState.xcuserstate
